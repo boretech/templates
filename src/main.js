@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import store from './store'
 import App from './App.vue'
+import './base.css'
 import { title } from './config'
 
 document.title = title

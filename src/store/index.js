@@ -1,7 +1,8 @@
 import { createStore } from 'vuex'
+import preloader from './modules/preloader'
 
 export default createStore({
-  state: {},
-  mutations: {},
-  actions: {}
+  modules: {
+    preloader
+  }
 })
