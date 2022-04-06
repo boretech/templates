@@ -1,19 +1,18 @@
 <template>
-  <Loading v-if="!loaded" />
+  <Loading @complete="loadComplete" @file-loaded="fileLoaded" />
   <div class="container">
-    <div class="w-[100px] h-[100px] bg-slate-500"></div>
     <preloader src="/images/logo.png" />
     <preloader src="/images/logo.png" />
     <preloader src="/images/logo.png" />
     <preloader src="/images/logo.png" />
     <preloader src="/images/logo.png" />
-    <preloader src="/images/logo.png" v-show="test"/>
+    <preloader src="/images/logo.png" v-show="test" />
   </div>
 </template>
 
 <script setup>
-import {computed,ref} from 'vue'
-import {useStore} from 'vuex'
+import { computed, ref } from 'vue'
+import { useStore } from 'vuex'
 import Loading from '@/components/Loading.vue'
 import Preloader from '@/components/Preloader.vue'
 
@@ -23,5 +22,12 @@ const store = useStore()
 
 const loaded = computed(() => store.state.preloader.loaded)
 
+const loadComplete = () => {
+  console.log('complete')
+}
+
+const fileLoaded = ({ id }) => {
+  console.log(id)
+}
 
 </script>

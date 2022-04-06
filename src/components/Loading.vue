@@ -1,5 +1,16 @@
 <template>
-  <div>{{ state.rate }}</div>
+  <div
+    class="container loading"
+    :class="{ 'animate-[fade-out_.5s_linear_forwards]': state.total && state.total === state.loaded }"
+    v-if="state.show"
+    @animationend="onAnimationEnd"
+  >
+    <div class="loading-box" v-if="!custom">
+      <img class="loading-icon" :src="`https://cdn.pannacloud.com/img/loading/loading${icon}.svg`" />
+      <div class="loading-text">{{ state.rate }}%</div>
+    </div>
+    <slot v-if="custom" />
+  </div>
 </template>
 
 <script>
@@ -15,20 +26,32 @@ import axios from 'axios'
 
 const store = useStore()
 
+const props = defineProps({
+  icon: {
+    type: Number,
+    default: 18
+  },
+  custom: {
+    type: Boolean,
+    default: false
+  }
+})
+
 const state = reactive({
   total: 0,
   loaded: 0,
-  rate: 0
+  rate: 0,
+  show: true
 })
 
+const emits = defineEmits(['file-loaded', 'complete'])
+
 const loadSources = (sourceData) => Promise.all(sourceData.map((source, index) => new Promise((resolve, reject) => {
-  // console.log('load')
   axios({
     url: source.src,
     method: 'get',
     responseType: 'blob'
   }).then(res => {
-    // console.log('111')
     const img = new Image()
     img.onload = () => {
       store.commit('UPDATE_SOURCE_DATA', {
@@ -43,24 +66,31 @@ const loadSources = (sourceData) => Promise.all(sourceData.map((source, index) =
       })
       state.loaded += 1
       state.rate = Math.round(state.loaded / state.total * 100)
-      console.log(state.rate)
+      // console.log(state.rate)
+      emits('file-loaded', {
+        id: source.id
+      })
       resolve(source)
     }
     img.src = URL.createObjectURL(res.data)
   }).catch(err => {
+    state.loaded += 1
+    state.rate = Math.round(state.loaded / state.total * 100)
+    console.error(`load error: ${source.src} which 
+    id is ${source.id}`)
     reject(err)
   })
 })))
 
-
-
-
+const onAnimationEnd = (e) => {
+  console.log(e)
+  state.show = false
+}
 
 onMounted(() => {
-  // console.log(store.state.preloader.sourceData.length)
   state.total = store.state.preloader.sourceData.length
-
   loadSources(store.state.preloader.sourceData).then(() => {
+    emits('complete')
     store.commit('SET_LOADED')
   })
 })

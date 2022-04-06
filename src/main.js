@@ -6,6 +6,6 @@ import { title } from './config'
 
 document.title = title
 
-console.log(import.meta.env)
+// console.log(import.meta.env)
 
 createApp(App).use(store).mount('#app')
