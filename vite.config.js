@@ -16,7 +16,7 @@ export default defineConfig((command, mode) => {
   console.log(base)
   return {
     plugins: [vue()],
-    base,
+    base: base,
     resolve: {
       alias: {
         '@': resolve('./src'),

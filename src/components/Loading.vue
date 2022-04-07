@@ -87,7 +87,13 @@ const loadSources = (sourceData) => Promise.all(sourceData.map((source, index) =
   }
   if (/mp3/.test(ext)) {
     // mp3
-
+    axios({
+      url: source.src,
+      method: 'get',
+      responseType: 'arraybuffer'
+    }).then(res => {
+      console.log(res)
+    })
   }
 })))
 
