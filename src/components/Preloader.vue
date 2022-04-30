@@ -9,8 +9,11 @@ export default {
 </script>
 
 <script setup>
+import {cdn} from '../config'
 import { reactive, watch } from 'vue'
 import { useStore } from 'vuex'
+
+const mode = import.meta.env.MODE
 
 const store = useStore()
 
@@ -27,7 +30,7 @@ const props = defineProps({
 
 const state = reactive({
   id: `${props.type}-${new Date().getTime()}${`${Math.random()}`.substring(2, 6)}`,
-  src: props.src,
+  src: mode === 'production' ? `${cdn}${props.src}` : `/${props.src}`,
   local: '',
   loaded: false,
   width: 0,
