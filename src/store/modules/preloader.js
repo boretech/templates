@@ -1,9 +1,13 @@
 const state = {
+  originData: [],
   sourceData: [],
   loaded: false,
 }
 
 const mutations = {
+  PUSH_ORIGIN_DATA(state, data) {
+    state.originData.push(data)
+  },
   PUSH_SOURCE_DATA(state, data) {
     state.sourceData.push(data)
   },
@@ -15,9 +19,7 @@ const mutations = {
   }
 }
 
-const actions = {
-
-}
+const actions = {}
 
 export default {
   state,

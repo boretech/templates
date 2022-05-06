@@ -1,31 +1,21 @@
 <template>
   <Loading @complete="loadComplete" @file-loaded="fileLoaded" />
   <div class="container">
-    <preloader :src="mode === 'production' ? cdn : '/' + 'images/logo.png'" />
-    <preloader :src="mode === 'production' ? cdn : '/' + 'images/logo.png'" />
-    <preloader :src="mode === 'production' ? cdn : '/' + 'images/logo.png'" />
-    <preloader :src="mode === 'production' ? cdn : '/' + 'images/logo.png'" />
-    <preloader :src="mode === 'production' ? cdn : '/' + 'images/logo.png'" />
-    <preloader :src="mode === 'production' ? cdn : '/' + 'images/logo.png'" v-show="test" />
+    <preloader src="images/logo.png" />
+    <preloader src="images/logo.png" />
+    <preloader src="images/logo.png" />
+    <preloader src="images/logo.png" />
+    <preloader src="images/logo.png" />
+    <preloader src="images/logo.png" v-show="test" />
   </div>
 </template>
 
 <script setup>
-import {cdn} from './config'
-import { computed, ref } from 'vue'
-import { useStore } from 'vuex'
+import { ref } from 'vue'
 import Loading from '@/components/Loading.vue'
 import Preloader from '@/components/Preloader.vue'
 
-const mode = import.meta.env.MODE
-
-console.log(mode)
-
 const test = ref(false)
-
-const store = useStore()
-
-const loaded = computed(() => store.state.preloader.loaded)
 
 const loadComplete = () => {
   console.log('complete')
