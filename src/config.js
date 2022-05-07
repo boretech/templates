@@ -1,20 +1,20 @@
 export const title = 'bore project'
 
-export const projectPath = 'wx'
+export const serverPath = 'wx'
 
 export const year = '2022'
 
-export const custom = 'shimao'
+export const custom = 'dev'
 
-export const projectDate = '0401'
+export const projectDate = '0501'
 
-export const projectName = 'temp'
+export const projectName = 'development'
 
 export const share = {}
 
-export const cdn = `https://${projectPath}cdn.pannacloud.com/${year}/${custom}/${projectDate}_${projectName}/`
+export const cdn = `https://${serverPath}cdn.pannacloud.com/${year}/${custom}/${projectDate}_${projectName}/`
 
-export const ftp = `/${projectPath}/${year}/${custom}/${projectDate}_${projectName}/`
+export const ftp = `/${serverPath}/${year}/${custom}/${projectDate}_${projectName}/`
 
 export default {
   title,
