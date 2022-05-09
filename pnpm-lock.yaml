@@ -1,11 +1,10 @@
-lockfileVersion: 5.3
+lockfileVersion: 5.4
 
 specifiers:
   '@vitejs/plugin-vue': ^2.3.0
   autoprefixer: ^10.4.4
   axios: ^0.26.1
   postcss: ^8.4.12
-  postcss-px2vp: ^1.1.4
   tailwindcss: ^3.0.23
   vite: ^2.9.0
   vue: ^3.2.25
@@ -20,7 +19,6 @@ devDependencies:
   '@vitejs/plugin-vue': 2.3.1_vite@2.9.0+vue@3.2.31
   autoprefixer: 10.4.4_postcss@8.4.12
   postcss: 8.4.12
-  postcss-px2vp: 1.1.4
   tailwindcss: 3.0.23_autoprefixer@10.4.4
   vite: 2.9.0
 
@@ -36,7 +34,6 @@ packages:
   /@babel/helper-validator-identifier/7.16.7:
     resolution: {integrity: sha512-hsEnFemeiW4D08A5gUAZxLBTXpZ39P+a+DGDsHw1yxqyQ/jzFEnxf5uTEGp+3bzAbNOxU1paTgYS4ECU/IgfDw==}
     engines: {node: '>=6.9.0'}
-    dev: true
 
   /@babel/highlight/7.16.10:
     resolution: {integrity: sha512-5FnTQLSLswEj6IkgVw5KusNUUFY9ZGqe/TRFnP/BKYHYgfh7tc+C7mwiy95/yNP7Dh9x580Vv8r7u7ZfTBFxdw==}
@@ -51,6 +48,16 @@ packages:
     resolution: {integrity: sha512-BoHhDJrJXqcg+ZL16Xv39H9n+AqJ4pcDrQBGZN+wHxIysrLZ3/ECwCBUch/1zUNhnsXULcONU3Ei5Hmkfk6kiQ==}
     engines: {node: '>=6.0.0'}
     hasBin: true
+    dependencies:
+      '@babel/types': 7.17.10
+    dev: false
+
+  /@babel/types/7.17.10:
+    resolution: {integrity: sha512-9O26jG0mBYfGkUYCYZRnBwbVLd1UZOICEr2Em6InB6jVfsAv1GKgwXHmrSg+WFWDmeKTA6vyTZiN8tCSM5Oo3A==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      '@babel/helper-validator-identifier': 7.16.7
+      to-fast-properties: 2.0.0
     dev: false
 
   /@nodelib/fs.scandir/2.1.5:
@@ -869,10 +876,6 @@ packages:
       postcss-selector-parser: 6.0.10
     dev: true
 
-  /postcss-px2vp/1.1.4:
-    resolution: {integrity: sha512-Ooo8KyqJuYH7jWjSHpJiITgTLz0SJYIAxS7mU1P8JWzcUwM3n/Jt2GzWdA1sMjnzArtUNClkvETXn3YqoobD/A==}
-    dev: true
-
   /postcss-selector-parser/6.0.10:
     resolution: {integrity: sha512-IQ7TZdoaqbT+LCpShg46jnZVlhWD2w6iQYAcYXfHARZ7X1t/UGhhceQDs5X0cGqKvYlHNOuv7Oa1xmb0oQuA3w==}
     engines: {node: '>=4'}
@@ -1006,6 +1009,11 @@ packages:
     transitivePeerDependencies:
       - ts-node
     dev: true
+
+  /to-fast-properties/2.0.0:
+    resolution: {integrity: sha1-3F5pjL0HkmW8c+A3doGk5Og/YW4=}
+    engines: {node: '>=4'}
+    dev: false
 
   /to-regex-range/5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}

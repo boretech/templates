@@ -1,10 +1,7 @@
 <template>
-  <div
-    class="container loading"
-    :class="{ 'animate-[fade-out_.5s_linear_forwards]': state.total && state.total === state.loaded }"
-    v-if="state.show"
-    @animationend="onAnimationEnd"
-  >
+  <div class="container loading"
+    :class="{ 'animate-[fade-out_.5s_linear_forwards]': state.total && state.total === state.loaded }" v-if="state.show"
+    @animationend="onAnimationEnd">
     <div class="loading-box" v-if="!custom">
       <img class="loading-icon" :src="`https://cdn.pannacloud.com/img/loading/loading${icon}.svg`" />
       <div class="loading-text">{{ state.rate }}%</div>
@@ -22,11 +19,10 @@ export default {
 <script setup>
 import { onMounted, reactive, computed } from 'vue'
 import { useStore } from 'vuex'
-import axios from 'axios'
 
 const store = useStore()
 
-const props = defineProps({
+defineProps({
   icon: {
     type: Number,
     default: 18
