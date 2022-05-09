@@ -1,7 +1,6 @@
 module.exports = {
   plugins: {
     tailwindcss: {},
-    autoprefixer: {},
     'postcss-px2vp': {
       unitToConvert: 'px',
       viewportWidth: 750,
@@ -16,5 +15,6 @@ module.exports = {
       exclude: [],
       landscape: false
     },
+    autoprefixer: {},
   },
 }
