@@ -1,12 +1,12 @@
 <template>
   <Loading @complete="loadComplete" @file-loaded="fileLoaded" />
   <div class="container">
-    <preloader src="./assets/images/logo.png" />
-    <preloader src="./assets/images/logo.png" />
-    <preloader src="./assets/images/logo.png" />
-    <preloader src="./assets/images/logo.png" />
-    <preloader src="./assets/images/logo.png" />
-    <preloader src="./assets/images/logo.png" v-show="test" />
+    <preloader src="src/assets/images/logo.png" />
+    <preloader src="src/assets/images/logo.png" />
+    <preloader src="src/assets/images/logo.png" />
+    <preloader src="src/assets/images/logo.png" />
+    <preloader src="src/assets/images/logo.png" />
+    <preloader src="src/assets/images/logo.png" v-show="test" />
   </div>
 </template>
 

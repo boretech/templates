@@ -1,5 +1,5 @@
 <template>
-  <img :id="state.id" :src="state.local" v-if="state.loaded"
+  <img :id="state.id" :src="state.local" v-if="type === 'image' && state.loaded"
     :style="{ width: `${state.width / 7.5}vw`, height: 'auto' }" @load="onload" />
 </template>
 

@@ -19,6 +19,7 @@ export default {
 <script setup>
 import { onMounted, reactive, computed } from 'vue'
 import { useStore } from 'vuex'
+import axios from 'axios'
 
 const store = useStore()
 
@@ -45,63 +46,98 @@ const originData = computed(() => store.state.preloader.originData)
 const emits = defineEmits(['file-loaded', 'complete'])
 
 const loadSources = (sourceData) => {
-  console.log(sourceData)
+  // console.log(sourceData)
+  // console.log(originData.value)
   sourceData.forEach((source) => {
-    if (originData.value.some(item => item.src !== source.src)) {
-
+    // console.log(source.src)
+    if (!originData.value.filter(item => item.src === source.src).length) {
+      store.commit('PUSH_ORIGIN_DATA', {
+        ids: [source.id],
+        width: source.width,
+        height: source.height,
+        src: source.src,
+        local: source.local
+      })
+    } else {
+      let newOriginData = originData.value
+      for (let i = 0; i < originData.value.length; i++) {
+        if (originData.value[i].src === source.src) {
+          newOriginData[i].ids.push(source.id)
+          break
+        }
+      }
+      store.commit('UPDATE_ORIGIN_DATA', newOriginData)
     }
   })
+  // console.log(originData.value)
+
+  return Promise.all(originData.value.map((source) => new Promise((resolve, reject) => {
+    const { src } = source
+    console.log(src)
+    const ext = src.split('.')[src.split('.').length - 1]
+    if (/gif|png|jpe?g|svg/.test(ext)) {
+      // images
+      axios({
+        url: source.src,
+        method: 'get',
+        responseType: 'blob'
+      }).then(res => {
+        const img = new Image()
+        img.onload = () => {
+          store.commit('UPDATE_ORIGIN_DATA', {
+            ...source,
+            width: img.width,
+            height: img.height,
+            local: URL.createObjectURL(res.data)
+          })
+
+          for (let i = 0; i < sourceData; i++) {
+            if (sourceData[i].src === src) {
+              store.commit('UPDATE_SOURCE_DATA', {
+                index: i,
+                value: {
+                  ...sourceData[i],
+                  width: img.width,
+                  height: img.height,
+                  local: URL.createObjectURL(res.data),
+                  loaded: true
+                }
+              })
+              emits('file-loaded', {
+                id: sourceData[i].id
+              })
+              state.loaded += 1
+              console.log(state.loaded)
+              state.rate = Math.round(state.loaded / state.total * 100)
+              if (state.rate === 1) {
+                
+              }
+            }
+          }
+          console.log(state.rate)
+          resolve(source)
+        }
+        img.src = URL.createObjectURL(res.data)
+      }).catch(err => {
+        state.loaded += 1
+        state.rate = Math.round(state.loaded / state.total * 100)
+        console.error(`load error: ${source.src} which id is ${source.id}`)
+        reject(err)
+      })
+    }
+
+    if (/mp3/.test(ext)) {
+      // mp3
+      axios({
+        url: source.src,
+        method: 'get',
+        responseType: 'arraybuffer'
+      }).then(res => {
+        console.log(res)
+      })
+    }
+  })))
 }
-// Promise.all(sourceData.map((source, index) => new Promise((resolve, reject) => {
-//   const { id, src } = source
-//   const ext = src.split('.')[src.split('.').length - 1]
-//   if (/gif|png|jpe?g|svg/.test(ext)) {
-//     // images
-//     axios({
-//       url: source.src,
-//       method: 'get',
-//       responseType: 'blob'
-//     }).then(res => {
-//       const img = new Image()
-//       img.onload = () => {
-//         store.commit('UPDATE_SOURCE_DATA', {
-//           index,
-//           value: {
-//             ...source,
-//             loaded: true,
-//             local: URL.createObjectURL(res.data),
-//             width: img.width,
-//             height: img.height
-//           }
-//         })
-//         state.loaded += 1
-//         state.rate = Math.round(state.loaded / state.total * 100)
-//         // console.log(state.rate)
-//         emits('file-loaded', {
-//           id: source.id
-//         })
-//         resolve(source)
-//       }
-//       img.src = URL.createObjectURL(res.data)
-//     }).catch(err => {
-//       state.loaded += 1
-//       state.rate = Math.round(state.loaded / state.total * 100)
-//       console.error(`load error: ${source.src} which 
-//     id is ${source.id}`)
-//       reject(err)
-//     })
-//   }
-//   if (/mp3/.test(ext)) {
-//     // mp3
-//     axios({
-//       url: source.src,
-//       method: 'get',
-//       responseType: 'arraybuffer'
-//     }).then(res => {
-//       console.log(res)
-//     })
-//   }
-// })))
 
 const onAnimationEnd = (e) => {
   console.log(e)
@@ -111,10 +147,10 @@ const onAnimationEnd = (e) => {
 onMounted(() => {
   state.total = store.state.preloader.sourceData.length
   loadSources(store.state.preloader.sourceData)
-  // .then(() => {
-  //   emits('complete')
-  //   store.commit('SET_LOADED')
-  // })
+    .then(() => {
+      emits('complete')
+      store.commit('SET_LOADED')
+    })
 })
 
 </script>

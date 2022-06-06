@@ -5,6 +5,9 @@ const state = {
 }
 
 const mutations = {
+  UPDATE_ORIGIN_DATA(state, data) {
+    state.originData = data
+  },
   PUSH_ORIGIN_DATA(state, data) {
     state.originData.push(data)
   },
@@ -22,6 +25,7 @@ const mutations = {
 const actions = {}
 
 export default {
+  name: 'preloader',
   state,
   mutations,
   actions,
