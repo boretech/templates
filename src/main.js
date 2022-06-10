@@ -4,8 +4,15 @@ import App from './App.vue'
 import './base.css'
 import { title } from './config'
 
+import SvgIcon from '@/components/SvgIcon.vue'
+
+import 'virtual:svg-icons-register'
+
 document.title = title
 
-// console.log(import.meta.env)
+const app = createApp(App)
 
-createApp(App).use(store).mount('#app')
+// console.log(import.meta.env)
+app.component('SvgIcon', SvgIcon)
+
+app.use(store).mount('#app')

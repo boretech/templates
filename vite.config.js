@@ -3,9 +3,17 @@ import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import { cdn } from './src/config'
 import viteImagemin from 'vite-plugin-imagemin'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 
 const common = {
-  plugins: [vue()],
+  plugins: [
+    createSvgIconsPlugin({
+      iconDirs: [resolve(process.cwd(), 'src/icons')],
+      symbolId: 'i-[name]',
+      customDomId: 'vite-svg-icons',
+    }),
+    vue()
+  ],
   resolve: {
     alias: {
       '@': resolve('src'),

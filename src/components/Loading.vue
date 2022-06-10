@@ -2,6 +2,7 @@
   <div class="container loading"
     :class="{ 'animate-[fade-out_.5s_linear_forwards]': state.total && state.total === state.loaded }" v-if="state.show"
     @animationend="onAnimationEnd">
+    <svg-icon icon="home" color="#fff" :size="64" />
     <div class="loading-box" v-if="!custom">
       <img class="loading-icon" :src="`https://cdn.pannacloud.com/img/loading/loading${icon}.svg`" />
       <div class="loading-text">{{ state.rate }}%</div>
