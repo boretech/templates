@@ -32,12 +32,13 @@ const mutations = {
   SET_LOADED(state) {
     state.loaded = true
   },
-  SET_POPUP_STATUS(state, data) {
-    state.popupStatus.show = data.show || false,
+  SET_POPUP_STATUS(state, data = {}) {
+    state.popupStatus.show = data.text || false,
     state.popupStatus.text = data.text || '',
     state.popupStatus.type = data.type || '',
     state.popupStatus.removeCallback = data.removeCallback || (() => {console.log('取消')}),
     state.popupStatus.defineCallback = data.defineCallback || (() => {console.log('确定')}),
+    state.popupStatus.closeCallback = data.closeCallback || (() => {console.log('关闭')}),
     state.popupStatus.duration = data.duration || 1500,
     data.time || (state.popupStatus.time = new Date().getTime())
   }

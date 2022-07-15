@@ -1,5 +1,5 @@
 <template>
-    <div v-show="show" class="pages" :class="{'animate-[fade-in_.5s_linear_forwards]' : show}">
+    <div v-show="show" class="pages bg-[#ccc]" :class="{'animate-[fade-in_.5s_linear_forwards]' : show}">
 
         <h1>规则{{ count }}</h1>
 

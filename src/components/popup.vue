@@ -1,6 +1,6 @@
 <template>
     <div v-if="popupStatus.show" class="pages z-[99] bg-[rgba(0,0,0,0.3)]" :class="{'animate-[fade-in_.5s_linear_forwards]' : popupStatus.show}">
-        <div v-if="popupStatus.type && popupStatus.type != 'modal'"
+        <div v-if="popupStatus.text && popupStatus.type != 'modal'"
             class="w-[150px] h-[160px] m-auto absolute inset-0 rounded-[10px] bg-[rgba(0,0,0,0.5)] flex flex-col items-center">
             <div :class="{ load: popupStatus.type == 'loading' }" class="mt-[15px]">
                 <svg-icon :icon="popupStatus.type" :size="70" />
@@ -28,10 +28,6 @@
 import { ref, reactive, watch, computed } from 'vue'
 import { useStore } from 'vuex'
 
-defineProps({
-
-})
-
 let delay = null
 
 const store = useStore()
@@ -40,10 +36,10 @@ let popupStatus = computed(() => store.state.preloader.popupStatus)
 watch(() => store.state.preloader.popupStatus.time, () => {
     clearTimeout(delay)
 
-    if (store.state.preloader.popupStatus.type != 'modal') {
+    if (['modal', 'loading'].indexOf(store.state.preloader.popupStatus.type) == -1) {
         delay = setTimeout(() => {
+            store.state.preloader.popupStatus.closeCallback()
             store.commit('SET_POPUP_STATUS', { time: true })
-            console.log('关闭弹窗')
 
         }, store.state.preloader.popupStatus.duration || 1500)
 

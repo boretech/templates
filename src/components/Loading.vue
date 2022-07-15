@@ -122,11 +122,15 @@ const loadSources = (sourceData) => {
 
                             }
                         })
-                        audioData[sourceData[i].id].local = localUrl
-                        audioData[sourceData[i].id].control = new Howl({
-                            src: [localUrl],
-                            format: 'mp3'
-                        })
+                        for (const v in audioData) {
+                            if (audioData[v].src === src) {
+                                audioData[v].control = new Howl({
+                                    src: [localUrl],
+                                    format: 'mp3'
+                                })
+                                audioData[v].local = localUrl
+                            }
+                        }
 
                         state.loaded += 1
                         emits('file-loaded', {
@@ -152,84 +156,7 @@ const loadSources = (sourceData) => {
         })
 
     })))
-
-    const promiseAll = []
-
-    for (const v in sourceData) {
-
-        promiseAll.push(
-            new Promise((resolve, reject) => {
-                const src = v
-                console.log(src)
-                const ext = src.split('.')[src.split('.').length - 1]
-                // images
-                axios({
-                    url: src,
-                    method: 'get',
-                    responseType: 'blob'
-                }).then(res => {
-                    if (/gif|png|jpe?g|svg/.test(ext)) {
-                        const img = new Image()
-                        img.onload = () => {
-                            store.commit('SET_SOURCE_DATA', {
-                                key: src,
-                                value: {
-                                    ...sourceData[src],
-                                    width: img.width,
-                                    height: img.height,
-                                    local: URL.createObjectURL(res.data),
-                                    loaded: true
-                                }
-                            })
-                        }
-                        img.src = URL.createObjectURL(res.data)
-
-                    }
-                    if (/mp3/.test(ext)) {
-                        store.commit('SET_SOURCE_DATA', {
-                            key: src,
-                            value: {
-                                ...sourceData[src],
-                                local: URL.createObjectURL(res.data),
-                                loaded: true,
-                                control: new Howl({
-                                    src: [URL.createObjectURL(res.data)],
-                                    format: 'mp3'
-                                })
-                            }
-                        })
-                        audioData[2].control = new Howl({
-                            src: [URL.createObjectURL(res.data)],
-                            format: 'mp3'
-                        })
-                    }
-
-                    emits('file-loaded', {
-                        id: sourceData[src].src
-                    })
-                    state.loaded += 1
-                    console.log(state.loaded)
-                    state.rate = Math.round(state.loaded / state.total * 100)
-                    if (state.rate === 1) {
-
-                    }
-
-                    console.log(state.rate)
-                    resolve(v)
-
-                }).catch(err => {
-                    state.loaded += 1
-                    state.rate = Math.round(state.loaded / state.total * 100)
-                    console.error(`load error: ${src} which id is ${sourceData[src].id}`)
-                    reject(err)
-                })
-
-            })
-        )
-    }
-
-    return Promise.all(promiseAll)
-
+    
 }
 
 const onAnimationEnd = (e) => {
@@ -238,16 +165,6 @@ const onAnimationEnd = (e) => {
 }
 
 onMounted(() => {
-    for (const v in audioData) {
-        const { src } = audioData[v]
-        store.commit('PUSH_SOURCE_DATA', {
-            id: v,
-            src: src,
-            local: '',
-            loaded: false,
-        })
-    }
-
 
     state.total = store.state.preloader.sourceData.length
     loadSources(store.state.preloader.sourceData)
@@ -255,6 +172,7 @@ onMounted(() => {
             emits('complete')
             store.commit('SET_LOADED')
             console.log(store.state.preloader.sourceData)
+            console.log(audioData)
         })
 })
 

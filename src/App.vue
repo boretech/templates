@@ -1,9 +1,9 @@
 <template>
     <Loading @complete="loadComplete" @file-loaded="fileLoaded" />
     <music />
+    <!-- modal || loading || error || success || warn || '' -->
     <popup />
     <div class="container">
-        <div @click="onOpenU">打开弹窗</div>
         <home @switching="switching" :show="pagesShow.home" />
         <rules @switching="switching" :show="pagesShow.rules" />
     </div>
@@ -18,25 +18,18 @@ import rules from '@/pages/rules.vue'
 
 import { ref, markRaw, reactive } from 'vue'
 import { useStore } from 'vuex'
-import { audioData } from '@/config'
 
 const store = useStore()
 
 const pagesShow = reactive({
-    home : true,
-    rules : false,
+    home : false,
+    rules : true,
 })
 
 const switching = (data) => {
     for(const k in pagesShow){ pagesShow[k] = false }
     for(const k of data){ pagesShow[k] = true }
-    console.log(data);
-}
-
-const onOpenU = () => {
-    console.log(store.state.preloader.popupStatus)
-    store.commit('SET_POPUP_STATUS', {show : true, text : '111', type : 'modal', removeCallback(){console.log('removeCallback');}})
-    
+    console.log(data)
 }
 
 const loadComplete = () => {

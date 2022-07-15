@@ -84,8 +84,9 @@ export default defineConfig(({ command, mode }) => {
                     },
                 })
             ],
-            // base: cdn
-            base: './'
+            base: cdn,
+            // base: './',
+            
         }
     }
 })

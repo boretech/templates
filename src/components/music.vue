@@ -1,7 +1,9 @@
 <template>
-    <div v-if="audioData.bgm && audioBtn.music_open" @click="onMusicBtn" :class="{ music: isPlay }" class="flex fixed top-[10px] right-[10px] z-50 bg-[#000]">
+    <div v-if="audioData.bgm && audioBtn.music_open" @click="onMusicBtn" :class="{ music: isPlay }" class="flex fixed top-[10px] right-[10px] z-50">
         <Preloader v-show="isPlay" :src="audioBtn.music_open" />
         <Preloader v-show="!isPlay" :src="audioBtn.music_close" />
+
+        <Preloader type="audio" :src="audioData.bgm.src" />
     </div>
 </template>
 
