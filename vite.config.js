@@ -1,3 +1,5 @@
+
+const fs = require('fs')
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
@@ -7,10 +9,10 @@ import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import { createHtmlPlugin } from 'vite-plugin-html'
 
 
-
 const commonPlugins = [
     vue(),
     createHtmlPlugin({
+        minify: false,
         inject: {
             data: {
                 aspx: aspx,
@@ -56,6 +58,15 @@ export default defineConfig(({ command, mode }) => {
             ...common,
             plugins: [
                 ...commonPlugins,
+                {
+                    closeBundle() {
+                        fs.rename('./dist/index.html', './dist/index.aspx', (err) => {
+                            console.log(err)
+                            // throw err;
+                        })
+
+                    }
+                },
                 viteImagemin({
                     gifsicle: {
                         optimizationLevel: 7,
@@ -82,11 +93,11 @@ export default defineConfig(({ command, mode }) => {
                             },
                         ],
                     },
-                })
+                }),
             ],
             base: cdn,
             // base: './',
-            
+
         }
     }
 })

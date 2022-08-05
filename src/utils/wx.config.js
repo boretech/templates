@@ -1,6 +1,5 @@
 import axios from 'axios'
 import wx from 'weixin-js-sdk'
-import {share} from '../config'
 
 axios({
     url: '/weixin/GetSign2.aspx',
@@ -29,14 +28,14 @@ const finalSuccess = () => {
         url: '/weixin/UpdateShareCount.aspx',
         method: 'post',
         data: {
-        url: window.location.href.split('?')[0]
+            url: window.location.href.split('?')[0]
         },
     })
 }
 
 // 分享配置
 const shareOption = (opt) => {
-    const {title, link, desc, pic, success} = opt || share
+    const {title, link, desc, pic, success} = opt
 
     wx.ready(() => {
         wx.onMenuShareTimeline({

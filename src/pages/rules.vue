@@ -11,6 +11,7 @@
 
 <script setup>
 import { ref, reactive, watch } from 'vue'
+import {popup} from '../utils/mitt'
 
 
 const props = defineProps({
@@ -21,6 +22,9 @@ const props = defineProps({
 // 监听页面显示关闭
 watch(() => props.show, () => {
     console.log('rules', props.show)
+    // <!-- modal || loading || error || success || warn -->
+    popup.emit('show', {text : '弹窗', type : 'loading', hideCallback(){console.log(1233);}})
+    // popup.emit('show', {text : '弹窗', type : 'warn', hideCallback(){console.log(1233);}})
 })
 
 const emits = defineEmits(['switching'])

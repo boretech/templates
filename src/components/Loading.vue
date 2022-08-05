@@ -21,9 +21,6 @@ export default {
 import { onMounted, reactive, computed } from 'vue'
 import { useStore } from 'vuex'
 import axios from 'axios'
-import { Howl } from 'howler'
-import { audioData } from '@/config'
-import { resolve } from 'path'
 
 const store = useStore()
 
@@ -109,7 +106,7 @@ const loadSources = (sourceData) => {
                 img.src = URL.createObjectURL(res.data)
 
             }
-            if (/mp3/.test(ext)) {
+            else if (/mp3/.test(ext)) {
                 for (let i = 0; i < sourceData.length; i++) {
                     if (sourceData[i].src === src) {
                         const localUrl = URL.createObjectURL(res.data)
@@ -122,15 +119,6 @@ const loadSources = (sourceData) => {
 
                             }
                         })
-                        for (const v in audioData) {
-                            if (audioData[v].src === src) {
-                                audioData[v].control = new Howl({
-                                    src: [localUrl],
-                                    format: 'mp3'
-                                })
-                                audioData[v].local = localUrl
-                            }
-                        }
 
                         state.loaded += 1
                         emits('file-loaded', {
@@ -140,7 +128,7 @@ const loadSources = (sourceData) => {
                 }
             }
 
-            console.log(state.loaded)
+            // console.log(state.loaded)
             state.rate = Math.round(state.loaded / state.total * 100)
             if (state.rate === 1) {
 
@@ -172,7 +160,6 @@ onMounted(() => {
             emits('complete')
             store.commit('SET_LOADED')
             console.log(store.state.preloader.sourceData)
-            console.log(audioData)
         })
 })
 

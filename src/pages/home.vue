@@ -16,6 +16,7 @@
 import { ref, reactive, watch } from 'vue'
 import { useStore } from 'vuex'
 import axios from 'axios'
+import {popup} from '../utils/mitt'
 
 import img1 from '../assets/images/1.png'
 
@@ -27,14 +28,13 @@ const props = defineProps({
 const store = useStore()
 
 const onOpenU = () => {
-    console.log(store.state.preloader.popupStatus)
-    store.commit('SET_POPUP_STATUS', {text : '111', type : 'success', removeCallback(){console.log('removeCallback');}})
-    
+    popup.emit('show', {text : '弹窗', type : 'modal', hideCallback(){console.log(1233);}})
 }
 
 // 监听页面显示关闭
 watch(() => props.show, () => {
     console.log('home', props.show)
+    
 
 })
 

@@ -15,6 +15,8 @@ import { useStore } from 'vuex'
 
 const store = useStore()
 
+const emits = defineEmits(['complete'])
+
 const props = defineProps({
   type: {
     type: String,
@@ -46,6 +48,7 @@ watch(() => store.state.preloader.sourceData[index].loaded, (newVal) => {
     state.local = current.local
     state.width = current.width
     state.height = current.height
+    emits('complete', current)
   }
 })
 

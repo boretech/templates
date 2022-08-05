@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.26.1",
     "howler": "^2.2.3",
+    "mitt": "^3.0.0",
     "vue": "^3.2.25",
     "vuex": "^4.0.2",
     "weixin-js-sdk": "^1.6.0"

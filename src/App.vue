@@ -1,15 +1,24 @@
 <template>
+
     <Loading @complete="loadComplete" @file-loaded="fileLoaded" />
+
     <music />
-    <!-- modal || loading || error || success || warn || '' -->
+
+    <!-- modal || loading || error || success || warn -->
     <popup />
+
     <div class="container">
         <home @switching="switching" :show="pagesShow.home" />
         <rules @switching="switching" :show="pagesShow.rules" />
     </div>
+
 </template>
 
 <script setup>
+import { shareOption } from './utils/wx.config'
+import { disablePageDragging } from './utils/index'
+import { title, cdn } from './config'
+
 import Loading from '@/components/Loading.vue'
 import music from '@/components/music.vue'
 import popup from '@/components/popup.vue'
@@ -18,6 +27,17 @@ import rules from '@/pages/rules.vue'
 
 import { ref, markRaw, reactive } from 'vue'
 import { useStore } from 'vuex'
+
+disablePageDragging()
+shareOption({
+    title: title,
+    desc: cdn,
+    link: '',
+    imgUrl: '',
+    success() {
+        console.log('分享成功');
+    }
+})
 
 const store = useStore()
 
@@ -37,7 +57,7 @@ const loadComplete = () => {
 }
 
 const fileLoaded = ({ id }) => {
-    console.log(id)
+    // console.log(id)
 }
 
 
