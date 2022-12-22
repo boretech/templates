@@ -1,8 +1,3 @@
-import { createStore } from 'vuex'
-import preloader from './modules/preloader'
+import { createPinia } from 'pinia'
 
-export default createStore({
-  modules: {
-    preloader
-  }
-})
+export const pinia = createPinia()

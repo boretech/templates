@@ -1,7 +1,7 @@
 {
-  "name": "templates",
-  "private": true,
+  "name": "@boretech/templates",
   "version": "0.0.0",
+  "description": "Templates for build H5",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -9,15 +9,16 @@
   },
   "dependencies": {
     "axios": "^0.26.1",
-    "vue": "^3.2.25",
-    "vuex": "^4.0.2"
+    "pinia": "^2.0.28",
+    "vue": "^3.2.45",
+    "vue-router": "^4.1.6"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^2.3.0",
-    "autoprefixer": "^10.4.4",
-    "postcss": "^8.4.12",
+    "@vitejs/plugin-vue": "^4.0.0",
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.20",
     "postcss-px2vp": "^1.1.4",
-    "tailwindcss": "^3.0.23",
-    "vite": "^2.9.0"
+    "tailwindcss": "^3.2.4",
+    "vite": "^4.0.3"
   }
 }
