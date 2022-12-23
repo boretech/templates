@@ -1,11 +1,25 @@
 import { createApp } from 'vue'
-import store from './store'
 import App from './App.vue'
-import './base.css'
-import { title } from './config'
 
-document.title = title
+import router from '@/router'
+import { pinia } from '@/store'
+import { setupGlobalComponents } from '@/components/global'
 
-// console.log(import.meta.env)
+import 'virtual:svg-icons-register'
 
-createApp(App).use(store).mount('#app')
+import '@/styles/common.scss'
+import '@/styles/tailwind.css'
+import 'vant/lib/index.css'
+import 'vant/es/toast/style'
+import 'vant/es/dialog/style'
+import 'vant/es/notify/style'
+import 'vant/es/image-preview/style'
+
+const app = createApp(App)
+
+setupGlobalComponents(app)
+
+app
+  .use(router)
+  .use(pinia)
+  .mount('#app')

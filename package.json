@@ -1,24 +1,43 @@
 {
-  "name": "@boretech/templates",
-  "version": "0.0.0",
-  "description": "Templates for build H5",
+  "name": "templates",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview --mode staging",
+    "lint": "pnpm exec eslint --ext .js,.vue --fix src"
   },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
   "dependencies": {
-    "axios": "^0.26.1",
+    "@iconify/iconify": "^3.0.1",
+    "@iconify/vue": "^4.0.2",
+    "axios": "^1.2.1",
+    "dayjs": "^1.11.7",
     "pinia": "^2.0.28",
+    "qs": "^6.11.0",
+    "vant": "^4.0.4",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
     "autoprefixer": "^10.4.13",
+    "eslint": "^8.30.0",
+    "eslint-plugin-html": "^7.1.0",
+    "eslint-plugin-vue": "^9.8.0",
     "postcss": "^8.4.20",
     "postcss-px2vp": "^1.1.4",
+    "sass": "^1.57.1",
     "tailwindcss": "^3.2.4",
-    "vite": "^4.0.3"
+    "unplugin-auto-import": "^0.12.1",
+    "unplugin-icons": "^0.14.15",
+    "unplugin-vue-components": "^0.22.12",
+    "vite": "^4.0.3",
+    "vite-plugin-mkcert": "^1.10.1",
+    "vite-plugin-svg-icons": "^2.0.1"
   }
 }

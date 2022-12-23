@@ -1,3 +1,3 @@
 <template>
-  <div>Loading</div>
+  <div>SvgIcon</div>
 </template>

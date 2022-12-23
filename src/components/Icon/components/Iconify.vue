@@ -1,3 +1,3 @@
 <template>
-  <div>Loading</div>
+  <div>Iconify</div>
 </template>
