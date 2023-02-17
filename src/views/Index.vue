@@ -1,6 +1,8 @@
 <template>
   <van-config-provider :theme-vars="themeVars">
-    <van-button @click="showLoading">测试</van-button>
+    <van-button @click="showLoading">
+      测试
+    </van-button>
   </van-config-provider>
 </template>
 
@@ -13,7 +15,8 @@ const themeVars = {
 
 const showLoading = () => {
   showToast({
-    type: 'loading',
+    // type: 'loading',
+    type: 'error',
     message: '测试一下',
     // icon: 'wechat',
     duration: 3000,
