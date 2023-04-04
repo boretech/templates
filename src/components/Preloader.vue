@@ -9,6 +9,9 @@
   <audio
     v-if="type==='audio'"
     :src="sourceURL"
+    :loop="bgm && preloadStore.bgmList.length === 1 && false"
+    @canplaythrough="onAudioCanplaythrough"
+    @ended="onAudioEnded"
   />
   <video
     v-if="type==='video'"
@@ -36,6 +39,10 @@ const props = defineProps({
       return ['image', 'audio', 'video', 'bgm'].includes(value)
     }
   },
+  bgm: {
+    type: Boolean,
+    default: false
+  },
   autoSize: {
     type: Boolean,
     default: true
@@ -50,23 +57,38 @@ const state = reactive({
   }
 })
 
-const sourceURL = computed(() => {
-  if (state.index !== -1) {
-    return preloadStore.sourceList[state.index].blobURL
-  }
-  return ''
-})
+const sourceURL = computed(() => state.index !== -1 ? preloadStore.sourceList[state.index].blobURL : '')
 
 const onImageLoad = (e) => {
   // console.log('🚀 ~ file: Preloader.vue:58 ~ onImageLoad ~ e:', e)
   // console.log(e.target.naturalWidth)
   // console.log(e.target.naturalHeight)
+  e.currentTarget.setAttribute('id', `${preloadStore.sourceList[state.index].id}-${preloadStore.sourceList[state.index].targets.length}`)
+  preloadStore.sourceList[state.index].targets.push(e.currentTarget)
   const { naturalWidth, naturalHeight } = e.currentTarget
   if (props.autoSize) {
     state.imageSize = {
       width: naturalWidth,
       height: naturalHeight
     }
+  }
+}
+
+const onAudioCanplaythrough = (e) => {
+  // console.log('🚀 ~ file: Preloader.vue:82 ~ onAudioLoad ~ e:', e)
+  // console.log(e.currentTarget)
+  if (props.bgm && !preloadStore.bgmList.some(item => item.id === preloadStore.sourceList[state.index].id)) {
+    preloadStore.bgmList.push({
+      ...preloadStore.sourceList[state.index],
+      target: e.currentTarget
+    })
+  }
+}
+
+const onAudioEnded = (e) => {
+  console.log('🚀 ~ file: Preloader.vue:95 ~ onAudioEnded ~ e:', e)
+  if (props.bgm) {
+    preloadStore.bgmList.filter(item => item.id === preloadStore.sourceList[state.index].id)[0].target.play()
   }
 }
 

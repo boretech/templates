@@ -9,10 +9,7 @@
     <svg-icon name="music-on" />
     <preloader
       type="audio"
-      :src="music"
-    />
-    <preloader
-      type="audio"
+      :bgm="true"
       :src="music"
     />
     <preloader
@@ -23,6 +20,10 @@
     />
     <preloader
       :src="img1"
+    />
+    <preloader
+      class="w-[100px] h-[100px]"
+      :src="img2"
     />
     <preloader
       class="w-[100px] h-[100px]"

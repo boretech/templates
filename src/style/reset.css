@@ -4,6 +4,10 @@
 	box-sizing: border-box;
 }
 
+body {
+	color: #646566;
+}
+
 a,
 p,
 span {

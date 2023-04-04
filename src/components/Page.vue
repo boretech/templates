@@ -1,6 +1,7 @@
 <template>
   <div class="w-screen h-screen overflow-hidden">
     <slot />
+    <bgm-player />
     <loading>
       <slot name="loading" />
     </loading>
@@ -8,6 +9,7 @@
 </template>
 
 <script setup>
+import BgmPlayer from './BgmPlayer.vue'
 import Loading from './Loading.vue'
 import { loadResource } from '@/utils'
 

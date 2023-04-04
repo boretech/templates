@@ -8,6 +8,8 @@ export const usePreloadStore = defineStore('preload', {
       bgColor: '#333', // 默认 loading 背景色
       loaded: 0,
       sourceList: [],
+      bgmList: [],
+      bgmPlaying: false,
       icon: 30, // 1~30
       progress: true,
       progressBgColor: '#ffffcb',
@@ -16,6 +18,9 @@ export const usePreloadStore = defineStore('preload', {
     }
   },
   getters: {
+    bgm() {
+      return Boolean(this.bgmList.length)
+    },
     animate() {
       return this.show
     },
@@ -51,6 +56,7 @@ export const usePreloadStore = defineStore('preload', {
       this.sourceList[index].blob = blob
       this.sourceList[index].blobURL = window.URL.createObjectURL(new Blob([blob]), { type: blob.type })
       this.sourceList[index].loading = false
+      this.sourceList[index].targets = []
     },
     sourceLoaded() {
       this.loaded++
