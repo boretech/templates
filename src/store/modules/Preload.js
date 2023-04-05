@@ -8,7 +8,9 @@ export const usePreloadStore = defineStore('preload', {
       bgColor: '#333', // 默认 loading 背景色
       loaded: 0,
       sourceList: [],
+      bgmMode: 'loop',
       bgmList: [],
+      currentBgmIndex: -1,
       bgmPlaying: false,
       icon: 30, // 1~30
       progress: true,
@@ -38,11 +40,11 @@ export const usePreloadStore = defineStore('preload', {
     setCustom(custom = false) {
       this.custom = custom
     },
-    regSource(sourceURL) {
-      if (!this.sourceList.some(item => item.URL === sourceURL)) {
+    regSource({ src, id }) {
+      if (!this.sourceList.some(item => item.URL === src)) {
         this.sourceList.push({
-          id: `r${this.sourceList.length}`,
-          src: sourceURL,
+          id: id || `r${this.sourceList.length}`,
+          src: src,
           blob: null,
           blobURL: '',
           loading: false
@@ -63,6 +65,47 @@ export const usePreloadStore = defineStore('preload', {
       if (this.loaded === this.sourceList.length) {
         this.show = false
       }
+    },
+    toggleBgm(targetId) {
+      if (targetId) {
+        this.bgmMode = 'singleLoop'
+        const index = this.bgmList.findIndex(item => item.id === targetId)
+        if (this.bgmPlaying) {
+          if (this.currentBgmIndex !== index) {
+            this.bgmList[this.currentBgmIndex].target.stop()
+            this.currentBgmIndex = index
+            this.bgmList[this.currentBgmIndex].target.play()
+          } else {
+            this.bgmPlaying = false
+            this.bgmList[this.currentBgmIndex].target.pause()
+          }
+        } else {
+          this.bgmPlaying = true
+          this.currentBgmIndex = index
+          this.bgmList[this.currentBgmIndex].target.play()
+        }
+      } else {
+        this.bgmMode = 'loop'
+        if (this.currentBgmIndex === -1) {
+          this.bgmPlaying = true
+          this.currentBgmIndex = 0
+          this.bgmList[this.currentBgmIndex].target.play()
+        } else {
+          if (this.bgmPlaying) {
+            this.bgmPlaying = false
+            this.bgmList[this.currentBgmIndex].target.pause()
+          } else {
+            this.bgmPlaying = true
+            this.bgmList[this.currentBgmIndex].target.play()
+          }
+        }
+      }
+    },
+    stopBgm() {
+      this.bgmPlaying = false
+      this.bgmList[this.currentBgmIndex].target.pause()
+      this.bgmList[this.currentBgmIndex].target.currentTime = 0
+      this.currentBgmIndex = -1
     }
   }
 })

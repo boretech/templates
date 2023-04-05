@@ -10,7 +10,7 @@
     v-if="type==='audio'"
     :src="sourceURL"
     :loop="bgm && preloadStore.bgmList.length === 1 && false"
-    @canplaythrough="onAudioCanplaythrough"
+    @loadeddata="onLoadeddata"
     @ended="onAudioEnded"
   />
   <video
@@ -46,6 +46,10 @@ const props = defineProps({
   autoSize: {
     type: Boolean,
     default: true
+  },
+  customId: {
+    type: String,
+    default: ''
   }
 })
 
@@ -74,7 +78,7 @@ const onImageLoad = (e) => {
   }
 }
 
-const onAudioCanplaythrough = (e) => {
+const onLoadeddata = (e) => {
   // console.log('🚀 ~ file: Preloader.vue:82 ~ onAudioLoad ~ e:', e)
   // console.log(e.currentTarget)
   if (props.bgm && !preloadStore.bgmList.some(item => item.id === preloadStore.sourceList[state.index].id)) {
@@ -82,13 +86,30 @@ const onAudioCanplaythrough = (e) => {
       ...preloadStore.sourceList[state.index],
       target: e.currentTarget
     })
+  } else {
+    if (preloadStore.bgmList.some(item => item.id === preloadStore.sourceList[state.index].id)) {
+      console.warn(`Preloader multiple instances for the same audio resource id:${preloadStore.sourceList[state.index].id}`)
+    }
   }
 }
 
 const onAudioEnded = (e) => {
   console.log('🚀 ~ file: Preloader.vue:95 ~ onAudioEnded ~ e:', e)
   if (props.bgm) {
-    preloadStore.bgmList.filter(item => item.id === preloadStore.sourceList[state.index].id)[0].target.play()
+    if (preloadStore.bgmMode === 'loop') {
+      if (preloadStore.currentBgmIndex < preloadStore.bgmList.length - 1) {
+        preloadStore.currentBgmIndex++
+      } else {
+        preloadStore.currentBgmIndex = 0
+      }
+      preloadStore.bgmList[preloadStore.currentBgmIndex].target.play()
+    }
+
+    if (preloadStore.bgmMode === 'singleLoop') {
+      preloadStore.bgmList[preloadStore.currentBgmIndex].target.play()
+    }
+  } else {
+    // [ ] TODO: 这里是非 bgm 逻辑
   }
 }
 
@@ -98,7 +119,7 @@ onMounted(() => {
     state.index = preloadStore.sourceList.findIndex(item => item.src === props.src)
   } else {
     state.index = preloadStore.sourceList.length
-    preloadStore.regSource(props.src)
+    preloadStore.regSource({ src: props.src, id: props.customId })
   }
 })
 </script>
