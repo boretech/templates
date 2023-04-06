@@ -6,6 +6,11 @@ import { pinia, usePreloadStore } from '@/store'
 
 const preloadStore = usePreloadStore(pinia)
 
+/**
+ *
+ * @param {*} complete<Function>: callback function
+ * @param {*} mark<Boolean>: weather is continue task
+ */
 export const loadResource = (complete, mark) => {
   if (mark) {
     const downloadList = preloadStore.sourceList.filter(item => !(item.blob || item.loading))

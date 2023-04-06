@@ -21,16 +21,7 @@ import { usePreloadStore } from '@/store'
 
 const preloadStore = usePreloadStore()
 
-let test = true
-
 const togglePlayBgm = () => {
   preloadStore.toggleBgm()
-
-  if (test) {
-    test = false
-    setTimeout(() => {
-      preloadStore.stopBgm()
-    }, 3000)
-  }
 }
 </script>
