@@ -61,6 +61,12 @@ import video from '@/assets/video/simple.mp4'
 import Preloader from '@/components/Preloader.vue'
 import Page from '@/components/Page.vue'
 
+import { usePreloadStore } from '@/store'
+
+const preloadStore = usePreloadStore()
+
+preloadStore.custom = true
+
 const loadComplete = () => {
   console.log('app,complete')
 }

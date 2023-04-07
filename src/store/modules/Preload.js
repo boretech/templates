@@ -4,6 +4,7 @@ export const usePreloadStore = defineStore('preload', {
   state() {
     return {
       show: true, // 显示 loading
+      autoPlay: true,
       custom: false, // 是否自定义 loading 页
       bgColor: '#333', // 默认 loading 背景色
       loaded: 0,

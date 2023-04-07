@@ -3,6 +3,9 @@ import App from './App.vue'
 
 import { pinia } from '@/store'
 // import router from '@/router'
+// import wxLegacy from 'wx~v1.2.0'
+import wxModern from 'wx~v1.6.0'
+import { wxReady } from '@/utils'
 
 import '@/style/reset.css'
 import '@/style/tailwind.css'
@@ -22,6 +25,10 @@ document.title = import.meta.env.VITE_PROJECT_NAME
 if (JSON.parse(import.meta.env.VITE_ERUDA)) {
   Eruda.init()
 }
+
+wxReady(wxModern, () => {
+  // register function for wx.ready event
+})
 
 const app = createApp(App)
 
