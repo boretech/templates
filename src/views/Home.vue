@@ -5,7 +5,7 @@
         这是一个自定义的loading
       </div>
     </template>
-    <div>this is content</div>
+    <!-- <div>this is content</div> -->
     <svg-icon name="music-on" />
     <preloader
       type="audio"
@@ -29,19 +29,12 @@
       :src="img1"
     />
     <preloader
-      class="w-[100px] h-[100px]"
       :src="img2"
     />
     <preloader
-      class="w-[100px] h-[100px]"
-      :src="img2"
-    />
-    <preloader
-      class="w-[100px] h-[100px]"
       :src="img3"
     />
     <preloader
-      class="w-[100px] h-[100px]"
       :src="img4"
     />
     <van-button type="primary">
@@ -61,11 +54,11 @@ import video from '@/assets/video/simple.mp4'
 import Preloader from '@/components/Preloader.vue'
 import Page from '@/components/Page.vue'
 
-import { usePreloadStore } from '@/store'
+// import { usePreloadStore } from '@/store'
 
-const preloadStore = usePreloadStore()
+// const preloadStore = usePreloadStore()
 
-preloadStore.custom = true
+// preloadStore.custom = true
 
 const loadComplete = () => {
   console.log('app,complete')
