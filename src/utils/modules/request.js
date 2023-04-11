@@ -12,6 +12,7 @@ request.interceptors.request.use((config) => {
   } else {
     config.headers['Content-Type'] = 'application/json'
   }
+  return config
 }, err => {
   Promise.reject(err)
 })

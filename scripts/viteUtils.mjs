@@ -3,20 +3,10 @@ export const genEnv = (env) => Object.keys(env).reduce((acc, key) => {
 
   let realValue = valueString
 
-  if (/^(0|[1-9][0-9]*)$/.test(valueString)) {
-    realValue = +valueString
-  }
-
-  if (valueString === 'true') {
-    realValue = true
-  }
-
-  if (valueString === 'false') {
-    realValue = false
-  }
-
-  if (/^(\{*\}|[*])$/.test(valueString)) {
+  try {
     realValue = JSON.parse(valueString)
+  } catch (err) {
+    console.log('')
   }
 
   acc[key] = realValue

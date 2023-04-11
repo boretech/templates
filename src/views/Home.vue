@@ -1,17 +1,13 @@
 <template>
-  <page @complete="loadComplete">
-    <template #loading>
-      <div class="bg-white w-full h-full">
-        这是一个自定义的loading
-      </div>
-    </template>
-    <!-- <div>this is content</div> -->
-    <svg-icon name="music-on" />
+  <page
+    :autoplay="false"
+    :custom-loading="false"
+    @complete="loadComplete"
+  >
     <preloader
       type="audio"
-      :bgm="true"
-      custom-id="music"
-      :src="music"
+      custom-id="sound"
+      :src="sound"
     />
     <preloader
       type="audio"
@@ -48,7 +44,7 @@ import img1 from '@/assets/images/1.jpg'
 import img2 from '@/assets/images/2.jpg'
 import img3 from '@/assets/images/3.jpg'
 import img4 from '@/assets/images/4.jpg'
-import music from '@/assets/audio/music.mp3'
+import sound from '@/assets/audio/music.mp3'
 import bgm from '@/assets/audio/bgm.mp3'
 import video from '@/assets/video/simple.mp4'
 import Preloader from '@/components/Preloader.vue'

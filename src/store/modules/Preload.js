@@ -4,9 +4,9 @@ export const usePreloadStore = defineStore('preload', {
   state() {
     return {
       show: true, // 显示 loading
-      autoPlay: true,
-      custom: false, // 是否自定义 loading 页
-      bgColor: '#333', // 默认 loading 背景色
+      autoplay: false,
+      customLoading: false, // 是否自定义 loading 页
+      loadingBgColor: '#333', // 默认 loading 背景色
       loaded: 0,
       sourceList: [],
       bgmMode: 'loop',
@@ -32,14 +32,13 @@ export const usePreloadStore = defineStore('preload', {
     }
   },
   actions: {
-    setBgColor(color = '#333') {
-      this.bgColor = color
+    setProps(props) {
+      Object.keys(props).map(key => {
+        this[key] = props[key]
+      })
     },
     updatePercent(percent = 0) {
       this.percent = percent
-    },
-    setCustom(custom = false) {
-      this.custom = custom
     },
     regSource({ src, id }) {
       if (!this.sourceList.some(item => item.URL === src)) {
@@ -107,6 +106,14 @@ export const usePreloadStore = defineStore('preload', {
       this.bgmList[this.currentBgmIndex].target.pause()
       this.bgmList[this.currentBgmIndex].target.currentTime = 0
       this.currentBgmIndex = -1
+    },
+    playSound(id) {
+      const sound = this.sourceList.filter(item => item.id === id)[0]
+      if (sound) {
+        // test
+      } else {
+        console.warn(`Can't find audio resource by id <${id}>`)
+      }
     }
   }
 })

@@ -80,6 +80,7 @@ export default defineConfig(({ mode }) => {
       port: VITE_PORT || 5173,
       proxy: genProxy(VITE_PROXY)
     }
+    // console.log('🚀 ~ file: vite.config.mjs:83 ~ defineConfig ~ VITE_PROXY:', VITE_PROXY)
 
     if (VITE_HTTPS) {
       config.plugins = config.plugins.concat(mkcert())

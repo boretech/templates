@@ -5,11 +5,11 @@
     :class="preloadStore.animate ? '' : 'fadeOut'"
     @animationend="show = false"
   >
-    <slot v-if="preloadStore.custom" />
+    <slot v-if="preloadStore.customLoading" />
     <div
       v-else
       class="w-full h-full"
-      :style="{backgroundColor: preloadStore.bgColor}"
+      :style="{backgroundColor: preloadStore.loadingBgColor}"
     >
       <div class="w-[300px] h-[300px] fixed top-[30%] left-0 right-0 m-auto flex flex-col items-center justify-between">
         <img
