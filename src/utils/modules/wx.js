@@ -5,7 +5,8 @@ const shareStore = useShareStore(pinia)
 
 export const wxConfig = (wx, debug = false) => {
   request({
-    url: '/weixin/GetSign.aspx',
+    // change to the real link for wechat auth
+    url: '',
     method: 'post',
     data: {
       url: window.location.href.split('#')[0], // 此时的链接
@@ -57,7 +58,7 @@ export const wxConfig = (wx, debug = false) => {
         'addCard',
         'chooseCard',
         'openCard'
-      ] // 必填，需要使用的JS接口列表
+      ]
     })
   })
 }
