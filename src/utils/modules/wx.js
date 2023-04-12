@@ -1,6 +1,7 @@
-import { usePreloadStore, pinia } from '@/store'
+import { usePreloadStore, useShareStore, pinia } from '@/store'
 import { request } from './request'
 const preloadStore = usePreloadStore(pinia)
+const shareStore = useShareStore(pinia)
 
 export const wxConfig = (wx, debug = false) => {
   request({
@@ -66,6 +67,11 @@ export const wxReady = (wx, regFunc) => {
     if (preloadStore.autoplay) {
       preloadStore.toggleBgm()
     }
+
+    shareStore.wxReady = true
+
+    shareStore.setShare()
+
     regFunc && regFunc()
   })
 }

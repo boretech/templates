@@ -20,8 +20,7 @@
     "vite": "^4.2.1",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6",
-    "wx~v1.2.0": "npm:weixin-js-sdk@^1.2.0",
-    "wx~v1.6.0": "npm:weixin-js-sdk@^1.6.0"
+    "weixin-js-sdk": "^1.6.0"
   },
   "devDependencies": {
     "@iconify/json": "^2.2.48",

@@ -13,8 +13,7 @@ import BgmPlayer from './BgmPlayer.vue'
 import Loading from './Loading.vue'
 import { loadResource, wxConfig, wxReady } from '@/utils'
 import { usePreloadStore } from '@/store'
-// import wxLegacy from 'wx~v1.2.0'
-import wxModern from 'wx~v1.6.0'
+import wx from 'weixin-js-sdk'
 
 const preloadStore = usePreloadStore()
 
@@ -62,14 +61,14 @@ preloadStore.setProps(props)
 const emit = defineEmits(['complete'])
 
 // when wx.config
-wxReady(wxModern, () => {
+wxReady(wx, () => {
   // register function for wx.ready event
 })
 
 onMounted(() => {
   loadResource(() => {
     emit('complete')
-    wxConfig(wxModern)
+    wxConfig(wx)
   })
 })
 </script>

@@ -28,7 +28,10 @@ export const usePreloadStore = defineStore('preload', {
       return this.show
     },
     percent() {
-      return Math.floor(this.loaded / this.sourceList.length * 100)
+      if (this.sourceList.length) {
+        return Math.floor(this.loaded / this.sourceList.length * 100)
+      }
+      return 0
     }
   },
   actions: {
