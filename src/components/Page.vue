@@ -26,6 +26,34 @@ const props = defineProps({
   customLoading: {
     type: Boolean,
     default: false
+  },
+  loadingBgColor: {
+    type: String,
+    default: '#333',
+    validator: (value) => /^#*/.test(value)
+  },
+  icon: {
+    type: Number,
+    default: 30,
+    validator: (value) => value <= 30
+  },
+  progressBar: {
+    type: Boolean,
+    default: false
+  },
+  progressBarBgColor: {
+    type: String,
+    default: '#ffffcb',
+    validator: (value) => /^#*/.test(value)
+  },
+  progressBarBorderColor: {
+    type: String,
+    default: '#ff7c81',
+    validator: (value) => /^#*/.test(value)
+  },
+  concurrent: {
+    type: Number,
+    default: 10
   }
 })
 

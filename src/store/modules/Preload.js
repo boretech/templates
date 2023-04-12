@@ -14,10 +14,10 @@ export const usePreloadStore = defineStore('preload', {
       currentBgmIndex: -1,
       bgmPlaying: false,
       icon: 30, // 1~30
-      progress: true,
-      progressBgColor: '#ffffcb',
-      progressBorderColor: '#ff7c81',
-      concurrent: 1 // 资源下载的并发数
+      progressBar: true,
+      progressBarBgColor: '#ffffcb',
+      progressBarBorderColor: '#ff7c81',
+      concurrent: 10 // 资源下载的并发数
     }
   },
   getters: {
@@ -62,8 +62,32 @@ export const usePreloadStore = defineStore('preload', {
     },
     sourceLoaded() {
       this.loaded++
+      console.log(`Resource loaded: ${this.loaded}/${this.sourceList.length}`)
       if (this.loaded === this.sourceList.length) {
         this.show = false
+      }
+    },
+    toggleSound(id) {
+      const index = this.sourceList.findIndex(item => item.id === id)
+      if (index !== -1) {
+        const target = this.sourceList[index].target
+        if (target.paused) {
+          target.play()
+        } else {
+          target.pause()
+        }
+      } else {
+        console.warn(`Can't find resource by id <${id}>`)
+      }
+    },
+    stopSound(id) {
+      const index = this.sourceList.findIndex(item => item.id === id)
+      if (index !== -1) {
+        const target = this.sourceList[index].target
+        target.pause()
+        target.currentTime = 0
+      } else {
+        console.warn(`Can't find resource by id <${id}>`)
       }
     },
     toggleBgm(targetId) {
@@ -106,14 +130,6 @@ export const usePreloadStore = defineStore('preload', {
       this.bgmList[this.currentBgmIndex].target.pause()
       this.bgmList[this.currentBgmIndex].target.currentTime = 0
       this.currentBgmIndex = -1
-    },
-    playSound(id) {
-      const sound = this.sourceList.filter(item => item.id === id)[0]
-      if (sound) {
-        // test
-      } else {
-        console.warn(`Can't find audio resource by id <${id}>`)
-      }
     }
   }
 })

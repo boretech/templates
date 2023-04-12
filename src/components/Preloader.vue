@@ -88,7 +88,11 @@ const onLoadeddata = (e) => {
     })
   } else {
     if (preloadStore.bgmList.some(item => item.id === preloadStore.sourceList[state.index].id)) {
-      console.warn(`Preloader multiple instances for the same audio resource id:${preloadStore.sourceList[state.index].id}`)
+      // console.warn(`Preloader multiple instances for the same audio resource id:${preloadStore.sourceList[state.index].id}`)
+      const index = preloadStore.bgmList.findIndex(item => item.id === preloadStore.sourceList[state.index].id)
+      preloadStore.bgmList[index].target = e.currentTarget
+    } else {
+      preloadStore.sourceList[state.index].target = e.currentTarget
     }
   }
 }

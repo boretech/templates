@@ -19,7 +19,7 @@
         <div class="text-white text-sm">
           {{ preloadStore.percent }}%
         </div>
-        <Progress v-if="preloadStore.progress" />
+        <Progress v-if="preloadStore.progressBar" />
       </div>
     </div>
   </div>

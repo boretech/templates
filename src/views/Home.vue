@@ -2,6 +2,12 @@
   <page
     :autoplay="false"
     :custom-loading="false"
+    loading-bg-color="#333"
+    :icon="30"
+    :progress-bar="true"
+    progress-bar-bg-color="#ffffcb"
+    progress-bar-border-color="#ff7c81"
+    :concurrent="1"
     @complete="loadComplete"
   >
     <preloader
@@ -33,7 +39,10 @@
     <preloader
       :src="img4"
     />
-    <van-button type="primary">
+    <van-button
+      type="primary"
+      @click="preloadStore.toggleSound('sound')"
+    >
       测试
     </van-button>
   </page>
@@ -50,14 +59,14 @@ import video from '@/assets/video/simple.mp4'
 import Preloader from '@/components/Preloader.vue'
 import Page from '@/components/Page.vue'
 
-// import { usePreloadStore } from '@/store'
+import { usePreloadStore } from '@/store'
 
-// const preloadStore = usePreloadStore()
+const preloadStore = usePreloadStore()
 
 // preloadStore.custom = true
 
 const loadComplete = () => {
-  console.log('app,complete')
+  // console.log('app,complete')
 }
 
 </script>

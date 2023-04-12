@@ -16,13 +16,13 @@ export const loadResource = (complete, mark) => {
     const downloadList = preloadStore.sourceList.filter(item => !(item.blob || item.loading))
     if (downloadList.length) {
       const item = downloadList[0]
-      console.log('🚀 ~ file: preload.js:14 ~ loadResource ~ item:', item)
+      // console.log('🚀 ~ file: preload.js:14 ~ loadResource ~ item:', item)
       const index = preloadStore.sourceList.findIndex(source => source.id === item.id)
       preloadStore.setLoading(index)
       axios.get(item.src, {
         responseType: 'blob'
       }).then(res => {
-        console.log('🚀 ~ file: preload.js:20 ~ loadResource ~ res:', res)
+        // console.log('🚀 ~ file: preload.js:20 ~ loadResource ~ res:', res)
         preloadStore.setResourceBlob({ index, blob: res.data })
         preloadStore.sourceLoaded()
         if (downloadList.length === 1) {
@@ -37,14 +37,14 @@ export const loadResource = (complete, mark) => {
     const downloadList = preloadStore.sourceList.filter(item => !(item.blob || item.loading)).filter((item, index) => index < preloadStore.concurrent)
     const taskList = []
     downloadList.forEach(item => {
-      console.log('🚀 ~ file: preload.js:27 ~ loadResource ~ item:', item)
+      // console.log('🚀 ~ file: preload.js:27 ~ loadResource ~ item:', item)
       const index = preloadStore.sourceList.findIndex(source => source.id === item.id)
       preloadStore.setLoading(index)
       taskList.push(
         axios.get(item.src, {
           responseType: 'blob'
         }).then(res => {
-          console.log('🚀 ~ file: preload.js:33 ~ loadResource ~ res:', res)
+          // console.log('🚀 ~ file: preload.js:33 ~ loadResource ~ res:', res)
           preloadStore.setResourceBlob({ index, blob: res.data })
           preloadStore.sourceLoaded()
           loadResource(complete, true)
